@@ -4,3 +4,4 @@ node_modules/
 *.log
 pinstripe.js
 pinstripe.js.map
+.DS_Store

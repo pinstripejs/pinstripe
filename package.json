@@ -6,6 +6,9 @@
   "exports": {
     ".": "./lib/index.js"
   },
+  "bin": {
+    "pinstripe": "./cli.js"
+  },
   "license": "MIT",
   "scripts": {
     "build": "rollup --config",

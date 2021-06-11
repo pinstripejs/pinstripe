@@ -5,7 +5,7 @@ import { spawn } from 'child_process';
 import { importAll, project, unregisterCommands, createEnvironment } from 'pinstripe';
 
 (async () => {
-    const { mainPath, localPinstripePath } = await project;
+    const { entryPath, localPinstripePath } = await project;
     const { argv, env, execPath } = process;
     const args = argv.slice(2);
 
@@ -16,8 +16,8 @@ import { importAll, project, unregisterCommands, createEnvironment } from 'pinst
         });
     } else {
         await importAll();
-        if(mainPath){
-            await import(mainPath);
+        if(entryPath){
+            await import(entryPath);
             await importAll();
         }
 

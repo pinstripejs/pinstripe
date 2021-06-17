@@ -3,7 +3,7 @@ export default [
     {
         input: 'lib/client/index.js',
         output: {
-            file: `lib/controllers/static/pinstripe.js`,
+            file: `lib/static/javascripts/pinstripe.js`,
             format: 'iife',
             name: 'Pinstripe',
             sourcemap: true

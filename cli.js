@@ -2,10 +2,13 @@
 
 import { spawn } from 'child_process';
 
-import { importAll, project, unregisterCommands, createEnvironment } from 'pinstripe';
+import { importAll } from './lib/import_all.js';
+import { project } from './lib/project.js';
+import { Command } from './lib/command.server.js';
+import { Environment } from './lib/environment.js';
 
 (async () => {
-    const { entryPath, localPinstripePath } = await project;
+    const { entryPath, localPinstripePath, exists } = await project;
     const { argv, env, execPath } = process;
     const args = argv.slice(2);
 
@@ -21,9 +24,18 @@ import { importAll, project, unregisterCommands, createEnvironment } from 'pinst
             await importAll();
         }
 
-        await unregisterCommands();
+        if(exists){
+            Command.unregister('generate-project');
+        } else {
+            const allowedCommands = ['generate-project', 'list-commands']
+            Object.keys(Command.classes).forEach(commandName => {
+                if(!allowedCommands.includes(commandName)){
+                    Command.unregister(commandName);
+                }
+            });
+        }
 
-        const { runCommand } = createEnvironment();
+        const { runCommand } = Environment.new();
         await runCommand(...args);
     }
 })();
